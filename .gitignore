@@ -1,0 +1,5 @@
+custom-env
+.vscode
+*.jpg
+*.csv
+*.json
