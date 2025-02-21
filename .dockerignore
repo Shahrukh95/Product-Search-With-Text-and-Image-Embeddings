@@ -3,4 +3,3 @@ custom-env
 *.jpg
 *.csv
 *.json
-tests/

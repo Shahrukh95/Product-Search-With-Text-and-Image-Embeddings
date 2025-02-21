@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  ubuntu-container:
+    build: .
+    image: python-3.13.2-challenge
+    container_name: ubuntu_container
+    volumes:
+      - .:/app         
+    working_dir: /app
+    tty: true
+    command: ["bash"]
