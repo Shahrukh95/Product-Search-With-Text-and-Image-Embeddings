@@ -1,24 +1,32 @@
 version: '3.9'
 
 services:
-  triton-server:
+  mongodb:
+    image: mongo:8.0.4
+    container_name: mongo_container
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  streamlit-app:
     build: .
-    image: my-triton-server
-    container_name: triton_server
+    image: streamlit-app
+    container_name: streamlit_container
     volumes:
       - .:/app
-      - ./models:/models  # Ensure Triton loads models from this folder
     working_dir: /app
-    tty: true
-    command: ["tritonserver", "--model-repository=/models"]
+    depends_on:
+      - mongodb
     ports:
-      - "8000:8000"  # HTTP API
-      - "8001:8001"  # gRPC API
-      - "8002:8002"  # Metrics API
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+      - "8501:8501"
+    environment:
+      MONGO_URI=mongodb://admin:password@mongodb:27017/
+    # command: ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+
+volumes:
+  mongo_data:

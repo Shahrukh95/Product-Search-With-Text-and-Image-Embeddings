@@ -3,3 +3,5 @@ custom-env
 *.jpg
 *.csv
 *.json
+tests/
+__pycache__/

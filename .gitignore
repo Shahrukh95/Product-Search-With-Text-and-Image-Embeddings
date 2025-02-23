@@ -4,3 +4,4 @@ custom-env
 *.csv
 *.json
 tests/
+__pycache__/

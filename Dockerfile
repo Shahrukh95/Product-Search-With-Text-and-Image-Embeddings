@@ -1,17 +1,15 @@
 # Use the official Ubuntu base image
-# FROM python:3.13.2-slim
-FROM nvcr.io/nvidia/tritonserver:25.01-trtllm-python-py3
+FROM python:3.13.2-slim
 
 WORKDIR /app
 COPY . /app
 
-# Install necessary dependencies
-RUN apt-get update -y && apt-get install -y \
-    build-essential curl wget git nano vim
+RUN apt-get update && apt-get install -y curl nano build-essential && rm -rf /var/lib/apt/lists/*
 
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Expose Triton ports for API access
-EXPOSE 8000 8001 8002
+# Set environment variables
+ENV MONGO_URI=mongodb://admin:password@mongodb:27017/
 
-# Run Triton Server on container startup
-CMD ["tritonserver", "--model-repository=/models"]
+# CMD ["streamlit", "run", "app.py"]
+CMD ["tail", "-f", "/dev/null"]
