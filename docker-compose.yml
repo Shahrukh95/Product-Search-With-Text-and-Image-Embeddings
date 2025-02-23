@@ -1,12 +1,24 @@
 version: '3.9'
 
 services:
-  ubuntu-container:
+  triton-server:
     build: .
-    image: python-3.13.2-challenge
-    container_name: ubuntu_container
+    image: my-triton-server
+    container_name: triton_server
     volumes:
-      - .:/app         
+      - .:/app
+      - ./models:/models  # Ensure Triton loads models from this folder
     working_dir: /app
     tty: true
-    command: ["bash"]
+    command: ["tritonserver", "--model-repository=/models"]
+    ports:
+      - "8000:8000"  # HTTP API
+      - "8001:8001"  # gRPC API
+      - "8002:8002"  # Metrics API
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
