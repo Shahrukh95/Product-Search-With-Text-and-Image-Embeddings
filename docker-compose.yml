@@ -6,8 +6,8 @@ services:
     container_name: mongo_container
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     ports:
       - "27017:27017"
     volumes:
@@ -25,8 +25,9 @@ services:
     ports:
       - "8501:8501"
     environment:
-      MONGO_URI=mongodb://admin:password@mongodb:27017/
+      - MONGO_URI=${MONGO_URI}
     # command: ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
 
 volumes:
   mongo_data:
+

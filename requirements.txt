@@ -1,4 +1,3 @@
 pymongo
 streamlit
 pandas
-pymongo

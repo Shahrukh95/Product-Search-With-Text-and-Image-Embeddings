@@ -5,3 +5,4 @@ custom-env
 *.json
 tests/
 __pycache__/
+.env
