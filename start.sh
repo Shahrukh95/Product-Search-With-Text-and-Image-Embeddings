@@ -26,7 +26,7 @@ uvicorn app:app --host 0.0.0.0 --port 5000 &
 API_PID=$!
 
 # Auto-shutdown if idle for 10 seconds
-IDLE_TIMEOUT=30
+IDLE_TIMEOUT=3600
 LOG_FILE="/tmp/server_activity.log"
 touch $LOG_FILE
 
