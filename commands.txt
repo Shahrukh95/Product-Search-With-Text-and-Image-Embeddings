@@ -1,0 +1,10 @@
+apt install -y pkg-config libcairo2-dev python3-dev
+
+# Set the working directory to /workspace
+pip install gdown
+
+RUN gdown --folder https://drive.google.com/drive/folders/1E2D2ekxGa4uQ2mu9zrURKb3f8l85fFjS -O triton-server
+
+pip install -r triton-server/requirements.txt
+
+&& ./triton-server/start.sh
