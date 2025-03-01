@@ -1,0 +1,78 @@
+I0301 18:57:37.121014 21885 pinned_memory_manager.cc:275] Pinned memory pool is created at '0x7036aa000000' with size 268435456
+I0301 18:57:37.125410 21885 cuda_memory_manager.cc:107] CUDA memory pool is created on device 0 with size 67108864
+I0301 18:57:37.175078 21885 model_lifecycle.cc:461] loading: UAE-Large-V1:1
+I0301 18:57:37.177869 21885 model_lifecycle.cc:461] loading: nomic-embed-vision:1
+I0301 18:57:37.180283 21885 onnxruntime.cc:2610] TRITONBACKEND_Initialize: onnxruntime
+I0301 18:57:37.180594 21885 onnxruntime.cc:2620] Triton TRITONBACKEND API version: 1.17
+I0301 18:57:37.180867 21885 onnxruntime.cc:2626] 'onnxruntime' TRITONBACKEND API version: 1.17
+I0301 18:57:37.181135 21885 onnxruntime.cc:2656] backend configuration:
+{"cmdline":{"auto-complete-config":"true","backend-directory":"/opt/tritonserver/backends","min-compute-capability":"6.000000","default-max-batch-size":"4"}}
+I0301 18:57:37.222539 21885 onnxruntime.cc:2721] TRITONBACKEND_ModelInitialize: UAE-Large-V1 (version 1)
+I0301 18:57:37.222970 21885 onnxruntime.cc:2721] TRITONBACKEND_ModelInitialize: nomic-embed-vision (version 1)
+I0301 18:57:37.223753 21885 onnxruntime.cc:694] skipping model configuration auto-complete for 'UAE-Large-V1': inputs and outputs already specified
+I0301 18:57:37.224064 21885 onnxruntime.cc:694] skipping model configuration auto-complete for 'nomic-embed-vision': inputs and outputs already specified
+I0301 18:57:37.226366 21885 onnxruntime.cc:2786] TRITONBACKEND_ModelInstanceInitialize: UAE-Large-V1_0 (GPU device 0)
+I0301 18:57:37.226701 21885 onnxruntime.cc:2786] TRITONBACKEND_ModelInstanceInitialize: nomic-embed-vision_0 (GPU device 0)
+2025-03-01 18:57:39.180811063 [W:onnxruntime:, session_state.cc:1162 VerifyEachNodeIsAssignedToAnEp] Some nodes were not assigned to the preferred execution providers which may or may not have an negative impact on performance. e.g. ORT explicitly assigns shape related ops to CPU to improve perf.
+2025-03-01 18:57:39.180989303 [W:onnxruntime:, session_state.cc:1164 VerifyEachNodeIsAssignedToAnEp] Rerunning with verbose output on a non-minimal build will show node assignments.
+I0301 18:57:39.746021 21885 model_lifecycle.cc:827] successfully loaded 'UAE-Large-V1'
+2025-03-01 18:57:40.655095382 [W:onnxruntime:, session_state.cc:1162 VerifyEachNodeIsAssignedToAnEp] Some nodes were not assigned to the preferred execution providers which may or may not have an negative impact on performance. e.g. ORT explicitly assigns shape related ops to CPU to improve perf.
+2025-03-01 18:57:40.655286481 [W:onnxruntime:, session_state.cc:1164 VerifyEachNodeIsAssignedToAnEp] Rerunning with verbose output on a non-minimal build will show node assignments.
+I0301 18:57:40.737993 21885 model_lifecycle.cc:827] successfully loaded 'nomic-embed-vision'
+I0301 18:57:40.738679 21885 server.cc:606] 
++------------------+------+
+| Repository Agent | Path |
++------------------+------+
++------------------+------+
+
+I0301 18:57:40.739077 21885 server.cc:633] 
++-------------+-----------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Backend     | Path                                                            | Config                                                                                                                                                        |
++-------------+-----------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| onnxruntime | /opt/tritonserver/backends/onnxruntime/libtriton_onnxruntime.so | {"cmdline":{"auto-complete-config":"true","backend-directory":"/opt/tritonserver/backends","min-compute-capability":"6.000000","default-max-batch-size":"4"}} |
++-------------+-----------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+I0301 18:57:40.739472 21885 server.cc:676] 
++--------------------+---------+--------+
+| Model              | Version | Status |
++--------------------+---------+--------+
+| UAE-Large-V1       | 1       | READY  |
+| nomic-embed-vision | 1       | READY  |
++--------------------+---------+--------+
+
+I0301 18:57:40.841578 21885 metrics.cc:877] Collecting metrics for GPU 0: NVIDIA RTX A5000
+I0301 18:57:40.844994 21885 metrics.cc:770] Collecting CPU metrics
+I0301 18:57:40.845496 21885 tritonserver.cc:2498] 
++----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Option                           | Value                                                                                                                                                                                                           |
++----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| server_id                        | triton                                                                                                                                                                                                          |
+| server_version                   | 2.42.0                                                                                                                                                                                                          |
+| server_extensions                | classification sequence model_repository model_repository(unload_dependents) schedule_policy model_configuration system_shared_memory cuda_shared_memory binary_tensor_data parameters statistics trace logging |
+| model_repository_path[0]         | model_repository                                                                                                                                                                                                |
+| model_control_mode               | MODE_NONE                                                                                                                                                                                                       |
+| strict_model_config              | 0                                                                                                                                                                                                               |
+| rate_limit                       | OFF                                                                                                                                                                                                             |
+| pinned_memory_pool_byte_size     | 268435456                                                                                                                                                                                                       |
+| cuda_memory_pool_byte_size{0}    | 67108864                                                                                                                                                                                                        |
+| min_supported_compute_capability | 6.0                                                                                                                                                                                                             |
+| strict_readiness                 | 1                                                                                                                                                                                                               |
+| exit_timeout                     | 30                                                                                                                                                                                                              |
+| cache_enabled                    | 0                                                                                                                                                                                                               |
++----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+I0301 18:57:40.847611 21885 grpc_server.cc:2519] Started GRPCInferenceService at 0.0.0.0:8001
+I0301 18:57:40.847977 21885 http_server.cc:4623] Started HTTPService at 0.0.0.0:8000
+I0301 18:57:40.889446 21885 http_server.cc:315] Started Metrics Service at 0.0.0.0:8002
+Signal (15) received.
+I0301 18:59:11.817638 21885 server.cc:307] Waiting for in-flight requests to complete.
+I0301 18:59:11.818156 21885 server.cc:323] Timeout 30: Found 0 model versions that have in-flight inferences
+I0301 18:59:11.818693 21885 server.cc:338] All models are stopped, unloading models
+I0301 18:59:11.819022 21885 server.cc:345] Timeout 30: Found 2 live models and 0 in-flight non-inference requests
+I0301 18:59:11.818939 21885 onnxruntime.cc:2838] TRITONBACKEND_ModelInstanceFinalize: delete instance state
+I0301 18:59:11.818999 21885 onnxruntime.cc:2838] TRITONBACKEND_ModelInstanceFinalize: delete instance state
+I0301 18:59:11.877266 21885 onnxruntime.cc:2762] TRITONBACKEND_ModelFinalize: delete model state
+I0301 18:59:11.877700 21885 model_lifecycle.cc:612] successfully unloaded 'nomic-embed-vision' version 1
+I0301 18:59:11.884288 21885 onnxruntime.cc:2762] TRITONBACKEND_ModelFinalize: delete model state
+I0301 18:59:11.884646 21885 model_lifecycle.cc:612] successfully unloaded 'UAE-Large-V1' version 1
+I0301 18:59:12.819394 21885 server.cc:345] Timeout 29: Found 0 live models and 0 in-flight non-inference requests

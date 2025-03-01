@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Request
 from pydantic import BaseModel
 import tritonclient.http as httpclient
 import numpy as np
@@ -7,10 +7,14 @@ import numpy as np
 from transformers import AutoTokenizer, AutoImageProcessor
 from PIL import Image
 import io
+import time
 
 app = FastAPI()
 
-# Triton Server URL (serverless RunPod)
+# Path to the log file used in start.sh
+LOG_FILE = "/tmp/server_activity.log"
+
+# Triton Server URL
 TRITON_SERVER_URL = "localhost:8000"
 client = httpclient.InferenceServerClient(url=TRITON_SERVER_URL)
 
@@ -25,6 +29,19 @@ image_processor = AutoImageProcessor.from_pretrained("nomic-ai/nomic-embed-visio
 # Define request model for text inference
 class TextInferenceRequest(BaseModel):
     texts: list[str]
+
+# Reset idle timeout when a request is received
+def reset_idle_timer():
+    with open(LOG_FILE, "w") as f:
+        f.write(str(time.time()))
+
+
+# Middleware to update idle timeout on EVERY request
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    reset_idle_timer()  # Update the timestamp before processing the request
+    response = await call_next(request)
+    return response
 
 @app.get("/health")
 def health_check():
@@ -75,53 +92,6 @@ def infer_text(texts: list[str]):
     
     except Exception as e:
         return {"error": str(e)}
-
-
-# # Image Inference API
-# @app.post("/infer_image")
-# def infer_image(images: list[UploadFile] = File(...)):
-#     if len(images) > 64:
-#         raise HTTPException(status_code=400, detail="Batch size exceeds 64 images")
-
-#     image_list = []
-#     for image_file in images:
-#         # Read and process image
-#         image_bytes = image_file.file.read()
-#         image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-
-#         # Preprocess the image using Hugging Face processor
-#         inputs = image_processor(image, return_tensors="np")
-
-#         # Append to batch
-#         image_list.append(inputs["pixel_values"])
-
-#     # Stack into batch format
-#     batched_images = np.vstack(image_list).astype(np.float32)
-
-#     # Create Triton inputs
-#     triton_input = httpclient.InferInput("pixel_values", batched_images.shape, "FP32")
-#     triton_input.set_data_from_numpy(batched_images)
-
-#     outputs = httpclient.InferRequestedOutput("last_hidden_state")  # Ensure correct output name
-
-#     try:
-#         # Send request to Triton
-#         response = client.infer(
-#             model_name=IMAGE_MODEL_NAME,
-#             inputs=[triton_input],
-#             outputs=[outputs]
-#         )
-
-#         # Extract and normalize embeddings
-#         img_embeddings = response.as_numpy("last_hidden_state")
-#         img_embeddings = torch.tensor(img_embeddings)
-#         normalized_embeddings = F.normalize(img_embeddings[:, 0], p=2, dim=1)
-
-#         return {"image_embeddings": normalized_embeddings.tolist()}
-    
-#     except Exception as e:
-#         return {"error": str(e)}
-
 
 
 # Image Inference API
