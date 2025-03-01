@@ -1,11 +1,7 @@
-custom-env
-.vscode
-*.jpg
-*.csv
-*.json
-tests/
-__pycache__/
-.env
-*.faiss
-model_repository/
-*.log
+# Ignore all files except the Dockerfile and necessary files
+.*
+!Dockerfile
+!requirements.txt
+!model_repository/
+!start.sh
+!app.py
