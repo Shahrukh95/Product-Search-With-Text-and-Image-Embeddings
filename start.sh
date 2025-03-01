@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Move to the Triton server directory
-cd Product-Search-With-Text-and-Image-Embeddings
+# Should already be in the repo directory
 
 # Start Triton Inference Server in the background
 /opt/tritonserver/bin/tritonserver \
