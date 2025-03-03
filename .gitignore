@@ -8,4 +8,5 @@ __pycache__/
 .env
 *.faiss
 model_repository/
+Embeddings/
 *.log
