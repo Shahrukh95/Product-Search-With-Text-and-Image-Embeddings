@@ -2,23 +2,17 @@ from fastapi import FastAPI, UploadFile, File, HTTPException, Request
 from pydantic import BaseModel
 import tritonclient.http as httpclient
 import numpy as np
-# import torch
-# import torch.nn.functional as F
 from transformers import AutoTokenizer, AutoImageProcessor
 from PIL import Image
 import io
-import time
 
 app = FastAPI()
-
-# Path to the log file used in start.sh
-LOG_FILE = "/tmp/server_activity.log"
 
 # Triton Server URL
 TRITON_SERVER_URL = "localhost:8000"
 client = httpclient.InferenceServerClient(url=TRITON_SERVER_URL)
 
-# Model names (as registered in Triton)
+# Model names
 TEXT_MODEL_NAME = "UAE-Large-V1"
 IMAGE_MODEL_NAME = "nomic-embed-vision"
 
@@ -29,19 +23,6 @@ image_processor = AutoImageProcessor.from_pretrained("nomic-ai/nomic-embed-visio
 # Define request model for text inference
 class TextInferenceRequest(BaseModel):
     texts: list[str]
-
-# Reset idle timeout when a request is received
-def reset_idle_timer():
-    with open(LOG_FILE, "w") as f:
-        f.write(str(time.time()))
-
-
-# Middleware to update idle timeout on EVERY request
-@app.middleware("http")
-async def add_process_time_header(request: Request, call_next):
-    reset_idle_timer()  # Update the timestamp before processing the request
-    response = await call_next(request)
-    return response
 
 @app.get("/health")
 def health_check():
