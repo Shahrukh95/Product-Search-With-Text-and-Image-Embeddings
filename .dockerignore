@@ -7,3 +7,6 @@ tests/
 __pycache__/
 .env
 *.faiss
+.gradio/
+Embeddings/
+model_repository/

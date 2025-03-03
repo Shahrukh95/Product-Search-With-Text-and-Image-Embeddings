@@ -1,3 +1,6 @@
+gradio
+faiss-cpu
+numpy
+requests
 pymongo
-streamlit
-pandas
+Pillow
