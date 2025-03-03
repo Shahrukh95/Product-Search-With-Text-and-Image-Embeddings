@@ -9,3 +9,4 @@ __pycache__/
 *.faiss
 model_repository/
 *.log
+Custom Tests/
