@@ -57,7 +57,7 @@ If using Runpod, use this image as a template instead.
    ```
 
 This will:
-- Download the **optimized ONNX models** for text and image embeddings.
+- Download the **optimized ONNX models** for text and image embeddings. The `config.pbtxt` files for both models have been defined. This includes the batch size, input/output layers and the backend runtime. To check how these models were obtained refer to the [ONNX Model Creation](#onnx-model-creation) section.
 - Start the **Triton server** and **Flask app**.
 
 Make sure the following ports are open:
@@ -107,13 +107,12 @@ If using **Runpod**, update the API endpoint. Your endpoint will be of the forma
 
 ---
 
-## **ONNX Model Creation**
+## ONNX Model Creation
 The project uses two models:
 
 1. **Text Embeddings:** [WhereIsAI/UAE-Large-V1](https://huggingface.co/WhereIsAI/UAE-Large-V1)
 2. **Image Embeddings:** [nomic-ai/nomic-embed-vision-v1.5](https://huggingface.co/nomic-ai/nomic-embed-vision-v1.5)
 
-### **ONNX Conversion**
 - The **UAE-Large-V1** model was converted to ONNX using the `ORTModelForFeatureExtraction` library from HuggingFace. Conversion script: ```Product-Search-With-Text-and-Image-Embeddings/ONNX Resources/UAE-Large-V1.ipynb```
 
 - The **nomic-embed-vision-v1.5** model was **downgraded** from **ONNX IR v10 to v9** because Triton does not support v10. Conversion script: ```Product-Search-With-Text-and-Image-Embeddings/ONNX Resources/nomic-embed-vision-v1.5.ipynb```
