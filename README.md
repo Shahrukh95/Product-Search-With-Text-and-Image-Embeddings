@@ -107,7 +107,7 @@ If using **Runpod**, update the API endpoint. Your endpoint will be of the forma
 
 ---
 
-## ONNX Model Creation
+## **ONNX Model Creation**
 The project uses two models:
 
 1. **Text Embeddings:** [WhereIsAI/UAE-Large-V1](https://huggingface.co/WhereIsAI/UAE-Large-V1)
