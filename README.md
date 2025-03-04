@@ -3,7 +3,7 @@
 This project enables product search using both text and image embeddings.
 
 ## **Preview of the Final App**
-(A preview image or GIF of the app can be placed here.)
+![Demo](assets/Demo.gif)
 
 ---
 
