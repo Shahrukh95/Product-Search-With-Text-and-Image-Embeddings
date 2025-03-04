@@ -32,7 +32,7 @@ This file contains **10,200 items**. To build or expand this dataset, follow the
 
 ---
 
-### **3. Build the Nvidia Triton Server**
+### **3. Deploy the Nvidia Triton Server from Docker Image**
 This project uses an **RTX A5000** Runpod instance. However, a smaller instance may also be used.
 
 #### **Steps to Set Up**
@@ -72,7 +72,7 @@ Make sure the following ports are open:
 
 ### **4. Build the Text and Image Embeddings**
 Once the **Flask API** for the Triton Server is running, generate embeddings by running the notebook: ```Generate All Embeddings.ipynb```
-The vector database used is FAISS. The notebook will generate text and image embeddings for the entire database.
+The notebook will generate text and image embeddings for the entire database and store them in a FAISS index for fast similarity search.
 
 ---
 
