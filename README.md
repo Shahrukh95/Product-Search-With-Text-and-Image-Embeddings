@@ -21,20 +21,19 @@ docker-compose up --build -d
 ### **2. Dataset Preparation**
 The final dataset is available at: ```dataset/textual/complete/final_products.csv```
 
-This file contains **10,200 items**. To **reproduce** or **expand** this dataset, follow these steps:
+This file contains **10,200 items**. To build or expand this dataset, follow these steps:
 
 #### **i) Dataset Generation**
-- The dataset is derived from **"Amazon Products Dataset (+1M Products)"** on Kaggle.
-- The generation script is available in ```dataset_generate.ipynb```
+- The dataset is derived from **Amazon Products Dataset (+1M Products)** on [Kaggle](https://www.kaggle.com/datasets/aaronfriasr/amazon-products-dataset?select=amazon_products.csv).
+- The dataset generation script is available in the notebook: ```dataset_generate.ipynb```
 
 #### **ii) Generating Product Descriptions**
-- Since product descriptions were missing, they were supplemented using **Llava-1.5-13b-hf**.
-- The script for generating image captions is available in: ```Llava Caption Generator.ipynb```
+- Although the titles in the dataset are somewhat descriptive, actual product descriptions were missing. Therefore a Visual Language model **Llava-1.5-13b-hf** with 4-bit quantization was used to generate image captions as an alternative. These were added to the dataset. The script for generating image captions is available in: ```Llava Caption Generator.ipynb```
 
 ---
 
 ### **3. Build the Nvidia Triton Server**
-This project uses an **RTX A5000** Runpod instance. However, a smaller instance may be used.
+This project uses an **RTX A5000** Runpod instance. However, a smaller instance may also be used.
 
 #### **Steps to Set Up**
 1. Pull the Triton official Docker image:
