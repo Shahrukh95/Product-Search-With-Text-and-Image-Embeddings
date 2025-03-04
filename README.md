@@ -26,6 +26,9 @@ ii) Run the following commands once the image loads up:
 - bash start.sh
 
 The triton server and the flask app should be running now. Make sure the port 8000 (for triton server) and 5000 (for flask) are open.
+The models can receive inputs in batches. 128 for the text model and 64 for the image model as defined in the respective ```config.pbtxt``` files in the "endpoint-creation" branch.
+
+4) Build the Text and Image Embeddings
 
 
 4) Run the Gradio App locally
@@ -40,4 +43,3 @@ For this project, the following models were used:
 While both models are available as ONNX at HuggingFace, the UAE-Large-V1 model was converted into ONNX manually using the 'ORTModelForFeatureExtraction' library. The code is available in ```Product-Search-With-Text-and-Image-Embeddings/ONNX Resources/UAE-Large-V1.ipynb``` in the "endpoint-creation" branch.
 
 The nomic-embed-vision-v1.5 ONNX model was downloaded from HuggingFace but downgraded from ONNX IR version 10 to 9 because the Triton image that we use in this project does not supprort ONNX version 10. The code is available at ```Product-Search-With-Text-and-Image-Embeddings/ONNX Resources/nomic-embed-vision-v1.5.ipynb``` in the "endpoint-creation" branch.
-
