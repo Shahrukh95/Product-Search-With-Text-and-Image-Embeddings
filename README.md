@@ -18,20 +18,40 @@ i) Load the Triton official Docker image "nvcr.io/nvidia/tritonserver:24.01-py3"
 ii) Run the following commands once the image loads up:
 - ```apt-get update && apt-get install -y pkg-config libcairo2-dev python3-dev git```
 - pip install --no-cache-dir gdown
-- git clone --single-branch --branch endpoint-creation https://github.com/Shahrukh95/Product-Search-With-Text-and-Image-Embeddings.git (the triton server and the flask app that converts the models into an API are vaialble this branch)
-- cd Product-Search-With-Text-and-Image-Embeddings
+- git clone https://github.com/Shahrukh95/Product-Search-With-Text-and-Image-Embeddings.git
+- cd Product-Search-With-Text-and-Image-Embeddings/Triton Server
 - gdown --folder https://drive.google.com/drive/folders/1E2D2ekxGa4uQ2mu9zrURKb3f8l85fFjS -O model_repository; (this downloads the optimized ONNX models for text and image embeddings. More details for this sepcific part are described in the next section.)
 - pip install --no-cache-dir -r requirements.txt;
 - chmod +x start.sh;
 - bash start.sh
 
 The triton server and the flask app should be running now. Make sure the port 8000 (for triton server) and 5000 (for flask) are open.
-The models can receive inputs in batches. 128 for the text model and 64 for the image model as defined in the respective ```config.pbtxt``` files in the "endpoint-creation" branch.
+The models can receive inputs in batches as follows:
+i) 128 inputs for the text model (```config.pbtxt```)
+ii) 64 inputs for the image model (```config.pbtxt```)
 
 4) Build the Text and Image Embeddings
+Since Flask provides an API for the Nvidia Triton Server, we can make inference and build the embeddings for a search engine. Run the ```Generate All Embeddings.ipynb``` to generate both types of embeddings and their indexes.
 
+5) Build the MongoDB product Database
+This is the database that holds all the meta information of the products. The data fields for this project are:
+```json
+{
+  "text_embedding_index": idx,   // FAISS Text Index
+  "image_embedding_index": idx,  // FAISS Image Index
+  "asin": row["asin"],
+  "title": row["title"],
+  "imgUrl": row["imgUrl"],
+  "productURL": row["productURL"],
+  "price": float(row["price"]),
+  "category": {
+    "id": row["category_id"],
+    "name": row["category_name"]
+  },
+  "product_description_ai_generated": row["llava_generated_image_caption"]
+}
 
-4) Run the Gradio App locally
+5) Run the Gradio App locally
 Once the containers have loaded up from step 1, the app should run automatically as defined in the Dockerfile. However, the endpoint API must be changed to point to your triton server. For Runpod this will be of the format: ```https://{YOUR-RUNPOD-ID}-5000.proxy.runpod.net/```
 
 
