@@ -10,7 +10,7 @@ This project enables product search using both text and image embeddings.
 ## **Steps to Run the Application**
 
 ### **1. Set Up Docker Containers**
-The application runs using Docker containers for MongoDB and Gradio. To set them up, run:
+The application runs using Docker containers for MongoDB (for storing product information) and Gradio (for web-based UI). Start by running docker-compose:
 
 ```sh
 docker-compose up --build -d
@@ -41,6 +41,7 @@ This project uses an **RTX A5000** Runpod instance. However, a smaller instance 
    ```sh
    docker pull nvcr.io/nvidia/tritonserver:24.01-py3
    ```
+If using Runpod, use this image as a template instead.
 
 2. Once the image loads, run:
 
