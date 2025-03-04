@@ -1,9 +1,9 @@
-**Product Search with Text and Image Embeddings**
+#**Product Search with Text and Image Embeddings**
 
 Here is the preview of the final app:
 
 
-**Steps to Run**
+# **Steps to Run**
 1) Replicate the docker containers. The yaml file has the mongodb and gradio containers
 ```docker-compose up --build -d```
 
