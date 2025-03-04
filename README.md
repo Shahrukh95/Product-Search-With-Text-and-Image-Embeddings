@@ -85,18 +85,18 @@ MongoDB stores all **product metadata**. The database schema is:
 
 ```
 {
-  "text_embedding_index": idx,   // Integer: Stores the FAISS text index.
-  "image_embedding_index": idx,  // Integer: Stores the FAISS image index.
-  "asin": row["asin"],           // String: Amazon Standard Identification Number (ASIN).
-  "title": row["title"],         // String: Product title.
-  "imgUrl": row["imgUrl"],       // String: URL of the product image.
-  "productURL": row["productURL"], // String: URL of the product page.
-  "price": float(row["price"]),  // Float: Price of the product.
+  "text_embedding_index": idx,   // Integer: Stores the FAISS text index
+  "image_embedding_index": idx,  // Integer: Stores the FAISS image index
+  "asin": row["asin"],           // String: Amazon Standard Identification Number
+  "title": row["title"],         // String: Product title
+  "imgUrl": row["imgUrl"],       // String: URL of the product image
+  "productURL": row["productURL"], // String: URL of the product page
+  "price": float(row["price"]),  // Float: Price of the product
   "category": {
-    "id": row["category_id"],    // String: ID of the product category.
-    "name": row["category_name"] // String: Name of the product category.
+    "id": row["category_id"],    // String: ID of the product category
+    "name": row["category_name"] // String: Name of the product category
   },
-  "product_description_ai_generated": row["llava_generated_image_caption"] // String: AI-generated description of the product.
+  "product_description_ai_generated": row["llava_generated_image_caption"] // String: llava-1.5-13b-hf generated description of the product image
 }
 ```
 
