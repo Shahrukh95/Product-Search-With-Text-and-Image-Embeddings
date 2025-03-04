@@ -35,21 +35,24 @@ Since Flask provides an API for the Nvidia Triton Server, we can make inference 
 
 5) Build the MongoDB product Database
 This is the database that holds all the meta information of the products. The data fields for this project are:
-```json
+```
 {
-  "text_embedding_index": idx,   // FAISS Text Index
-  "image_embedding_index": idx,  // FAISS Image Index
-  "asin": row["asin"],
-  "title": row["title"],
-  "imgUrl": row["imgUrl"],
-  "productURL": row["productURL"],
-  "price": float(row["price"]),
+  "text_embedding_index": idx,   // Integer: Stores the FAISS text index.
+  "image_embedding_index": idx,  // Integer: Stores the FAISS image index.
+  "asin": row["asin"],           // String: Amazon Standard Identification Number (ASIN).
+  "title": row["title"],         // String: Product title.
+  "imgUrl": row["imgUrl"],       // String: URL of the product image.
+  "productURL": row["productURL"], // String: URL of the product page.
+  "price": float(row["price"]),  // Float: Price of the product.
   "category": {
-    "id": row["category_id"],
-    "name": row["category_name"]
+    "id": row["category_id"],    // String: ID of the product category.
+    "name": row["category_name"] // String: Name of the product category.
   },
-  "product_description_ai_generated": row["llava_generated_image_caption"]
+  "product_description_ai_generated": row["llava_generated_image_caption"] // String: AI-generated description of the product.
 }
+```
+
+To create the database, collection and insert the data run the ```load_mongodb.py``` script.
 
 5) Run the Gradio App locally
 Once the containers have loaded up from step 1, the app should run automatically as defined in the Dockerfile. However, the endpoint API must be changed to point to your triton server. For Runpod this will be of the format: ```https://{YOUR-RUNPOD-ID}-5000.proxy.runpod.net/```
