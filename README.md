@@ -113,9 +113,9 @@ The project uses two models:
 1. **Text Embeddings:** [WhereIsAI/UAE-Large-V1](https://huggingface.co/WhereIsAI/UAE-Large-V1)
 2. **Image Embeddings:** [nomic-ai/nomic-embed-vision-v1.5](https://huggingface.co/nomic-ai/nomic-embed-vision-v1.5)
 
-- The **UAE-Large-V1** model was converted to ONNX using the `ORTModelForFeatureExtraction` library from HuggingFace. Conversion script: ```Product-Search-With-Text-and-Image-Embeddings/ONNX Resources/UAE-Large-V1.ipynb```
+- The **UAE-Large-V1** model was converted to ONNX using the `ORTModelForFeatureExtraction` library from HuggingFace. Conversion script: ```Triton Server/ONNX Resources/UAE-Large-V1.ipynb```
 
-- The **nomic-embed-vision-v1.5** model was **downgraded** from **ONNX IR v10 to v9** because Triton does not support v10. Conversion script: ```Product-Search-With-Text-and-Image-Embeddings/ONNX Resources/nomic-embed-vision-v1.5.ipynb```
+- The **nomic-embed-vision-v1.5** model was **downgraded** from **ONNX IR v10 to v9** because Triton does not support v10. Conversion script: ```Triton Server/ONNX Resources/nomic-embed-vision-v1.5.ipynb```
 
 ---
 
