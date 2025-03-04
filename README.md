@@ -7,6 +7,10 @@ This project enables product search using both text and image embeddings.
 
 ---
 
+## **Embedding Models Used**
+1. **Text Embeddings:** [WhereIsAI/UAE-Large-V1](https://huggingface.co/WhereIsAI/UAE-Large-V1)
+2. **Image Embeddings:** [nomic-ai/nomic-embed-vision-v1.5](https://huggingface.co/nomic-ai/nomic-embed-vision-v1.5)
+
 ## **Steps to Run the Application**
 
 ### **1. Set Up Docker Containers**
@@ -21,14 +25,14 @@ docker-compose up --build -d
 ### **2. Dataset Preparation**
 The final dataset is available at: ```dataset/textual/complete/final_products.csv```
 
-This file contains **10,200 items**. To build or expand this dataset, follow these steps:
+This file contains **10,200 items**. To reproduce this dataset, follow these steps:
 
 #### **i) Dataset Generation**
 - The dataset is derived from **Amazon Products Dataset (+1M Products)** on [Kaggle](https://www.kaggle.com/datasets/aaronfriasr/amazon-products-dataset?select=amazon_products.csv).
 - The dataset generation script is available in the notebook: ```dataset_generate.ipynb```
 
 #### **ii) Generating Product Descriptions**
-- Although the titles in the dataset are somewhat descriptive, actual product descriptions were missing. Therefore a Visual Language model **Llava-1.5-13b-hf** with 4-bit quantization was used to generate image captions as an alternative. These were added to the dataset. The script for generating image captions is available in: ```Llava Caption Generator.ipynb```
+- Although the titles in the dataset are somewhat descriptive, actual product descriptions were missing. Therefore a Visual Language model **Llava-1.5-13b-hf** with 4-bit quantization was used to generate image captions as an alternative. These were then added to the dataset. The script for generating image captions is available in: ```Llava Caption Generator.ipynb```
 
 ---
 
@@ -56,8 +60,8 @@ If using Runpod, use this image as a template instead.
    bash start.sh
    ```
 
-This will:
-- Download the **optimized ONNX models** for text and image embeddings. The `config.pbtxt` files for both models have been defined. This includes the batch size, input/output layers and the backend runtime. To check how these models were obtained refer to the [ONNX Model Creation](#onnx-model-creation) section.
+The above script will do the following:
+- Download the **optimized ONNX models** for generating text and image embeddings. The `config.pbtxt` files for both models have been defined. This includes the batch size, input/output layers and the backend runtime. To check how these models were obtained refer to the [ONNX Model Creation](#onnx-model-creation) section.
 - Start the **Triton server** and **Flask app**.
 
 Make sure the following ports are open:
@@ -108,13 +112,7 @@ If using **Runpod**, update the API endpoint. Your endpoint will be of the forma
 ---
 
 ## **ONNX Model Creation**
-The project uses two models:
-
-1. **Text Embeddings:** [WhereIsAI/UAE-Large-V1](https://huggingface.co/WhereIsAI/UAE-Large-V1)
-2. **Image Embeddings:** [nomic-ai/nomic-embed-vision-v1.5](https://huggingface.co/nomic-ai/nomic-embed-vision-v1.5)
-
 - The **UAE-Large-V1** model was converted to ONNX using the `ORTModelForFeatureExtraction` library from HuggingFace. Conversion script: ```Triton Server/ONNX Resources/UAE-Large-V1.ipynb```
-
 - The **nomic-embed-vision-v1.5** model was **downgraded** from **ONNX IR v10 to v9** because Triton does not support v10. Conversion script: ```Triton Server/ONNX Resources/nomic-embed-vision-v1.5.ipynb```
 
 ---
