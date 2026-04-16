@@ -1,0 +1,8 @@
+Use the Docker image:
+nvcr.io/nvidia/tritonserver:24.01-py3
+
+Run the Following Bash Command in the Docker file:
+bash -c 'apt-get update; apt-get install -y pkg-config libcairo2-dev python3-dev git; rm -rf /var/lib/apt/lists/*; pip install --no-cache-dir gdown; git clone --single-branch --branch endpoint-creation https://github.com/Shahrukh95/Product-Search-With-Text-and-Image-Embeddings.git; cd Product-Search-With-Text-and-Image-Embeddings; gdown --folder https://drive.google.com/drive/folders/1E2D2ekxGa4uQ2mu9zrURKb3f8l85fFjS -O model_repository; pip install --no-cache-dir -r requirements.txt; chmod +x start.sh; bash start.sh'
+
+*Important
+Depending upon your setup, you may need to expose ports manually. These ports are: 5000 (flask, HTTP) 8000 8001 8002 (Triton ports, TCP)

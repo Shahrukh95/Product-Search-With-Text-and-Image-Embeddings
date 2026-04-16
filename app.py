@@ -7,7 +7,7 @@ from pymongo import MongoClient
 from io import BytesIO
 
 # MongoDB Connection
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://admin:password@mongodb:27017")
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://mongodb:27017")
 client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
 db = client["productDB"]
 collection = db["products"]
@@ -21,7 +21,7 @@ index_text = faiss.read_index(FAISS_INDEX_TEXT_PATH)
 index_images = faiss.read_index(FAISS_INDEX_IMG_PATH)
 
 # API Endpoint for Inference
-RUNPOD_API_ENDPOINT = "https://26oe7qh881svy7-5000.proxy.runpod.net/"  # Change this accordingly
+RUNPOD_API_ENDPOINT = "http://host.docker.internal:5000"
 
 def find_similar_text(query_text, k=5):
     response = requests.post(f"{RUNPOD_API_ENDPOINT}/infer_text", json=[query_text])
@@ -82,7 +82,7 @@ def image_search_interface(image):
     return find_similar_images(image)
 
 # Gradio UI
-title = "🔍 Product Search using Embeddings"
+title = "Product Search using Embeddings"
 description = "Search for similar products using text or image queries."
 
 demo = gr.Interface(

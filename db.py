@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import os
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://admin:password@mongodb:27017")
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://mongodb:27017")
 
 # Connect to MongoDB
 client = MongoClient(MONGO_URI)

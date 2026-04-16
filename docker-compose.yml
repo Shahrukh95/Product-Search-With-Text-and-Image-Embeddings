@@ -21,6 +21,8 @@ services:
       - mongodb
     ports:
       - "7860:7860"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 volumes:
   mongo_data:

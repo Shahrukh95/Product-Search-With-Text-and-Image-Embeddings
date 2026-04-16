@@ -1,0 +1,12 @@
+FROM nvcr.io/nvidia/tritonserver:24.01-py3
+
+WORKDIR /triton-app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+
+COPY . .
+# RUN sed -i 's/\r//' start.sh && chmod +x start.sh
+
+CMD ["bash", "start.sh"]

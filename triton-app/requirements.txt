@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+tritonclient[http]
+numpy
+transformers
+Pillow
+python-multipart
+pydantic

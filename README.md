@@ -29,7 +29,7 @@ This file contains **10,200 items**. To reproduce this dataset, follow these ste
 
 #### **i) Dataset Generation**
 - The dataset is derived from **Amazon Products Dataset (+1M Products)** on [Kaggle](https://www.kaggle.com/datasets/aaronfriasr/amazon-products-dataset?select=amazon_products.csv).
-- The dataset generation script is available in the notebook: ```dataset_generate.ipynb```
+- The dataset generation script is available in the notebook: ```dataset_generator.ipynb```
 
 #### **ii) Generating Product Descriptions**
 - Although the titles in the dataset are somewhat descriptive, actual product descriptions were missing. Therefore a Visual Language model **Llava-1.5-13b-hf** with 4-bit quantization was used to generate image captions as an alternative. These were then added to the dataset. The script for generating image captions is available in: ```Llava Caption Generator.ipynb```
@@ -45,7 +45,13 @@ This project uses an **RTX A5000** Runpod instance. However, a smaller instance 
    ```sh
    docker pull nvcr.io/nvidia/tritonserver:24.01-py3
    ```
+
 If using Runpod, use this image as a template instead.
+
+If running locally, run the triton docker image:
+   ```sh
+   docker run --gpus all -d -p 5000:5000 -p 8000:8000 -p 8001:8001 -p 8002:8002 -v ${PWD}/triton-app:/triton-app triton-app
+   ```
 
 2. Once the image loads, run:
 
@@ -53,7 +59,7 @@ If using Runpod, use this image as a template instead.
    apt-get update && apt-get install -y pkg-config libcairo2-dev python3-dev git
    pip install --no-cache-dir gdown
    git clone https://github.com/Shahrukh95/Product-Search-With-Text-and-Image-Embeddings.git
-   cd Product-Search-With-Text-and-Image-Embeddings/Triton Server
+   cd Product-Search-With-Text-and-Image-Embeddings/triton-app
    gdown --folder https://drive.google.com/drive/folders/1E2D2ekxGa4uQ2mu9zrURKb3f8l85fFjS -O model_repository
    pip install --no-cache-dir -r requirements.txt
    chmod +x start.sh
@@ -112,8 +118,8 @@ If using **Runpod**, update the API endpoint. Your endpoint will be of the forma
 ---
 
 ## **ONNX Model Creation**
-- The **UAE-Large-V1** model was converted to ONNX using the `ORTModelForFeatureExtraction` library from HuggingFace. Conversion script: ```Triton Server/ONNX Resources/UAE-Large-V1.ipynb```
-- The **nomic-embed-vision-v1.5** model was **downgraded** from **ONNX IR v10 to v9** because Triton does not support v10. Conversion script: ```Triton Server/ONNX Resources/nomic-embed-vision-v1.5.ipynb```
+- The **UAE-Large-V1** model was converted to ONNX using the `ORTModelForFeatureExtraction` library from HuggingFace. Conversion script: ```triton-app/ONNX Resources/UAE-Large-V1.ipynb```
+- The **nomic-embed-vision-v1.5** model was **downgraded** from **ONNX IR v10 to v9** because Triton does not support v10. Conversion script: ```triton-app/ONNX Resources/nomic-embed-vision-v1.5.ipynb```
 
 ---
 
